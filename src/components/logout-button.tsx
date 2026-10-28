@@ -6,7 +6,7 @@ export default function LogoutButton() {
   return (
     <button
       type="button"
-      onClick={() => signOut({ redirect: false })}
+      onClick={() => signOut({ callbackUrl: "/login" })}
       className="rounded-md border px-4 py-2"
     >
       Sign out
