@@ -7,12 +7,18 @@ import { z } from "zod";
 import { db } from "@/lib/neondb";
 import { users } from "@/lib/neondb/schemas/users";
 
+const authSecret = process.env.AUTH_SECRET;
+if (!authSecret) {
+  throw new Error("AUTH_SECRET is not set. Add it to your environment variables.");
+}
+
 const credentialsSchema = z.object({
   email: z.email(),
   password: z.string().min(8),
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: authSecret,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   providers: [
